@@ -1,15 +1,15 @@
-function Scheduler(){
+function mySchedulerGithub() {
   var debugshift = 4;
-  var l_month_name_dic = {1:'január', 2:'február', 3:'március', 4:'április',
-        5:'május', 6:'június', 7:'július', 8:'augusztus', 9:'szeptember',
-        10:'október', 11:'november', 12:'december'}
-  var l_weekday_name_list = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek',
-        'Szombat', 'Vasárnap']
+  var l_month_name_dic = {1:'January', 2:'February', 3:'March', 4:'April',
+        5:'May', 6:'June', 7:'July', 8:'August', 9:'September',
+        10:'October', 11:'November', 12:'December'};
+  var l_weekday_name_list = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+        'Saturday', 'Sunday'];
   var l_C = 'C';
-  var l_CP = 'CT';
-  var l_P = 'T';
-  var l_O = 'H';
-  var l_E = 'T';
+  var l_CP = 'CP';
+  var l_P = 'P';
+  var l_O = 'O';
+  var l_E = 'E';
   
   var s_dic = {};
   s_dic[0] = l_P;
@@ -19,7 +19,7 @@ function Scheduler(){
 
   var app = SpreadsheetApp;
   var ss = app.getActiveSpreadsheet();
-  var dataSheet = ss.getSheetByName("Adatok");
+  var dataSheet = ss.getSheetByName("Data");
 
   var year = dataSheet.getRange(1, 2).getValue();
   
@@ -29,9 +29,9 @@ function Scheduler(){
   const SCHEDULE_YEAR = dataSheet.getRange(1, 2).getValue();
   const SCHEDULE_MONTH = dataSheet.getRange(2, 2).getValue();
   
-  var ts = ss.getSheetByName('Minta').copyTo(ss);
+  var ts = ss.getSheetByName('Template').copyTo(ss);
   ss.setActiveSheet(ts);
-  ts.setName("Beosztás " + String(SCHEDULE_YEAR) + ' ' + l_month_name_dic[SCHEDULE_MONTH] + ' ' + date);
+  ts.setName("Schedule " + String(SCHEDULE_YEAR) + ' ' + l_month_name_dic[SCHEDULE_MONTH] + ' ' + date);
   ts.getRange(1, 6).setValue(SCHEDULE_YEAR + ', ' + l_month_name_dic[SCHEDULE_MONTH]);
   
 //  resultSheet.getRange(1, 1).setValue(SCHEDULE_YEAR);
@@ -859,7 +859,7 @@ function Scheduler(){
     } // b
   }//c
   
-  ts.getRange(36, 2).setValue('Programozó: Szakál Imre');
-  ts.getRange(36, 4).setValue('imre.szakal@gmail.com');
+  ts.getRange(36, 2).setValue('Programmer: Imre Szakál');
+  ts.getRange(36, 4).setValue('imreszakal.com');
   
 }
