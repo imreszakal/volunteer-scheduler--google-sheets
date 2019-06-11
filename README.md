@@ -40,7 +40,7 @@ Each volunteer has to have 4 days between their shifts.
 
 1. Import "Scheduler.xlsx" or "Scheduler.ods" into Google Sheets.
 2. In the menu, click on "Tools"/"Script editor".
-3. Copy the code from "" into the "Code.gs" editor.
+3. Copy the code from "Code.gs" into the "Code.gs" editor.
 4. Save and give the function a name.
 
 ## Usage
