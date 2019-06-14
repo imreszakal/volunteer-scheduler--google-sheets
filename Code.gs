@@ -812,6 +812,7 @@ function Scheduler() {
   var sc;
   var x;
   var y;
+  var sol = {};
   
   if (!solution.isValid()) {
     Logger.log('No solution ' + solution.getStatus());
@@ -827,6 +828,7 @@ function Scheduler() {
     }
     for (j = 0; j < NUMBER_OF_VOLUNTEERS; j++){//b
       id = volunteers[j];
+      sol[id] = '';
       av_days_count = all_days_available[id].length;
       for (i = 0; i < av_days_count; i++){//c
         d = all_days_available[id][i]; //one day
@@ -843,7 +845,8 @@ function Scheduler() {
 //                resultSheet.getRange(5 + d, 2 + id).setValue(String(d)+ '-' + String(s_dic[s]));
                 x = xfrst[d] + s;
                 ts.getRange(x, y).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
-                //ts.getRange(x, y).setValue('d' +String(d) + String(s_dic[s]) + '-' + volunteer_dic[id] + ' s' +String(s) + ' x' +String(x) + ' y' +String(y));
+                //ts.getRange(x, y).setValue('d' + String(d) + String(s_dic[s]) + '-' + volunteer_dic[id] + ' s' +String(s) + ' x' +String(x) + ' y' +String(y));
+                sol[id] += String(d) + String(s_dic[s]) + ' ';
               }
             }
           }
@@ -855,6 +858,7 @@ function Scheduler() {
                 x = xfrst[d] + s - xfrst[d] * 9;
                 ts.getRange(x, y).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
                 //ts.getRange(x, y).setValue('d' +String(d) + String(s_dic[s]) + '-' + volunteer_dic[id]+ ' s' +String(s) + ' x' +String(x) + ' y' +String(y));
+                sol[id] += String(d) + String(s_dic[s]) + ' ';
             }
           }
         }
@@ -866,4 +870,11 @@ function Scheduler() {
   ts.getRange(36, 2).setValue('Programmer: Imre Szakál');
   ts.getRange(36, 4).setValue('imreszakal.com');
   
+  for (j = 0; j < NUMBER_OF_VOLUNTEERS; j++){
+    id = volunteers[j];
+    ts.getRange(4 + id, 10).setValue(volunteer_dic[id]);
+    ts.getRange(4 + id, 11).setValue(sol[id]);    
+  }
+  
 }
+
