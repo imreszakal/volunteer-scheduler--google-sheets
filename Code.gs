@@ -1,4 +1,4 @@
-function myScheduler() {
+function Scheduler() {
   var debugshift = 4;
   var l_month_name_dic = {1:'January', 2:'February', 3:'March', 4:'April',
         5:'May', 6:'June', 7:'July', 8:'August', 9:'September',
@@ -97,14 +97,15 @@ function myScheduler() {
   var week_count = 0;
   var d = 1;
   var what_day_dic = {};
-  var hhn = {};
+  var xfrst = {};
+  var yfrst = {};
   while (d <= DAYS_IN_MONTH){
     weeks[week_index] = [];
-    hhn[d] = {};
     while ((d + m - (week_index * 7) < 8) && (d <= DAYS_IN_MONTH)){
       weeks[week_index].push(d);
       what_day_dic[d] = d + m - (week_index * 7) - 1;
-      hhn[d] = [week_index, what_day_dic[d]];
+      xfrst[d] = 6 + (week_index * 6);
+      yfrst[d] = what_day_dic[d] + 2;
       d += 1;
     }
     week_index += 1;
@@ -808,9 +809,9 @@ function myScheduler() {
   
   // Solve the linear program
   var solution = engine.solve();
-  var h = 1;
-  var hn = 1;
   var sc;
+  var x;
+  var y;
   
   if (!solution.isValid()) {
     Logger.log('No solution ' + solution.getStatus());
@@ -829,8 +830,7 @@ function myScheduler() {
       av_days_count = all_days_available[id].length;
       for (i = 0; i < av_days_count; i++){//c
         d = all_days_available[id][i]; //one day
-        h = hhn[d][0];
-        hn = hhn[d][1];
+        y = yfrst[d];
 
         s_all = capacity[id][d]; // all shifts on this day
         if (!(typeof s_all === 'undefined')) {
@@ -841,7 +841,9 @@ function myScheduler() {
               variable_name = 'shift__' + String(id) + '_' + String(d) + '_' + String(s);
               if (solution.getVariableValue(variable_name) == 1){
 //                resultSheet.getRange(5 + d, 2 + id).setValue(String(d)+ '-' + String(s_dic[s]));
-                ts.getRange(6 + h * 6 + s, 2 + hn).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
+                x = xfrst[d] + s;
+                ts.getRange(x, y).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
+                //ts.getRange(x, y).setValue('d' +String(d) + String(s_dic[s]) + '-' + volunteer_dic[id] + ' s' +String(s) + ' x' +String(x) + ' y' +String(y));
               }
             }
           }
@@ -850,7 +852,9 @@ function myScheduler() {
             variable_name = 'shift__' + String(id) + '_' + String(d) + '_' + String(s);        
             if (solution.getVariableValue(variable_name) == 1){
 //              resultSheet.getRange(5 + d, 2 + id).setValue(String(d)+ '-' + String(s_dic[s]));
-              ts.getRange(6 + h * 6 + s, 2 + hn).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
+                x = xfrst[d] + s - xfrst[d] * 9;
+                ts.getRange(x, y).setValue(String(s_dic[s]) + '-' + volunteer_dic[id]);
+                //ts.getRange(x, y).setValue('d' +String(d) + String(s_dic[s]) + '-' + volunteer_dic[id]+ ' s' +String(s) + ' x' +String(x) + ' y' +String(y));
             }
           }
         }
