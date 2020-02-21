@@ -46,6 +46,7 @@ Each volunteer has to have 4 days between their shifts.
 ## Usage
 1. Fill in your data on the "Data" worksheet.
 <p><img src="https://imreszakal.com/github/volunteer-scheduler--google-sheets/01.JPG" alt="" title="" /></p>
+<p><img src="https://imreszakal.com/github/volunteer-scheduler--google-sheets/01.PNG" alt="" title="" /></p>
 2. Click on the image.
 
 ## Output
